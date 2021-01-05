@@ -42,7 +42,6 @@ class WorkOrder(Document):
 		self.set_onload("overproduction_percentage", ms.overproduction_percentage_for_work_order)
 
 	def validate(self):
-		self.set("batches", [])
 		self.validate_production_item()
 		if self.bom_no:
 			validate_bom_no(self.production_item, self.bom_no)
@@ -346,6 +345,7 @@ class WorkOrder(Document):
 		plan_days = cint(manufacturing_settings_doc.capacity_planning_for_days) or 30
 
 		for index, row in enumerate(self.operations):
+			if row.skip_job_card: continue
 			qty = self.qty
 			while qty > 0:
 				qty = split_qty_based_on_batch_size(self, row, qty)
@@ -487,7 +487,7 @@ class WorkOrder(Document):
 			select
 				operation, description, workstation, idx,
 				base_hour_rate as hour_rate, time_in_mins,
-				"Pending" as status, parent as bom, batch_size, sequence_id
+				"Pending" as status, parent as bom, batch_size, sequence_id, skip_job_card
 			from
 				`tabBOM Operation`
 			where
