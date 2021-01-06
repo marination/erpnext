@@ -1524,7 +1524,7 @@ class StockEntry(StockController):
 
 	def set_serial_no_batch_for_finished_good(self):
 		args = {}
-		if self.pro_doc.serial_no or self.pro_doc.batch_no:
+		if self.pro_doc.serial_no:
 			self.get_serial_nos_for_fg(args)
 
 		for row in self.items:

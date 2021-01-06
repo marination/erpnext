@@ -230,7 +230,7 @@ def set_stock_balance_as_per_serial_no(item_code=None, posting_date=None, postin
 		})
 
 		update_bin(args)
-		
+
 		create_repost_item_valuation_entry({
 			"item_code": d[0],
 			"warehouse": d[1],
