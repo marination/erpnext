@@ -1068,7 +1068,7 @@ class StockEntry(StockController):
 
 		fields = ["qty_to_produce as qty", "produced_qty", "name"]
 
-		for row in frappe.get_all("Batch", filters = filters, fields = fields):
+		for row in frappe.get_all("Batch", filters = filters, fields = fields, order_by="creation asc"):
 			batch_qty = flt(row.qty) - flt(row.produced_qty)
 			if not batch_qty: continue
 

@@ -726,10 +726,10 @@ class WorkOrder(Document):
 
 		for row in stock_entry_doc.items:
 			if row.batch_no and (row.is_finished_item or row.is_scrap_item):
-				qty = frappe.get_all("Stock Entry Detail", filters = {"batch_no": row.batch_no},
-					or_conditions= {"is_finished_item": 1, "is_scrap_item": 1}, fields = ["sum(qty)"])[0][0]
+				qty = frappe.get_all("Stock Entry Detail", filters = {"batch_no": row.batch_no, "docstatus": 1},
+					or_filters= {"is_finished_item": 1, "is_scrap_item": 1}, fields = ["sum(qty)"], as_list=1)[0][0]
 
-				frappe.db.set_value("Batch", row.batch_no, "produced_qty", qty)
+				frappe.db.set_value("Batch", row.batch_no, "produced_qty", flt(qty))
 
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
