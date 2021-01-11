@@ -524,7 +524,7 @@ frappe.ui.form.on('Stock Entry', {
 				})
 			);
 		}
-		
+
 		for (let i in frm.doc.items) {
 			let item = frm.doc.items[i];
 
@@ -679,7 +679,13 @@ frappe.ui.form.on('Stock Entry Detail', {
 						});
 						refresh_field("items");
 
-						if (!d.serial_no) {
+						let no_batch_serial_no_value = !d.serial_no;
+						if (d.has_batch_no && !d.has_serial_no) {
+							// check only has_batch_no for batched item
+							no_batch_serial_no_value = !d.batch_no;
+						}
+
+						if (no_batch_serial_no_value) {
 							erpnext.stock.select_batch_and_serial_no(frm, d);
 						}
 					}
