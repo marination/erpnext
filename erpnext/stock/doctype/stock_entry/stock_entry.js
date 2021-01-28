@@ -4,6 +4,14 @@ frappe.provide("erpnext.stock");
 
 frappe.ui.form.on('Stock Entry', {
 	setup: function(frm) {
+		frm.set_indicator_formatter('item_code', function(doc) {
+			if (!doc.s_warehouse) {
+				return 'blue';
+			} else {
+				return (doc.qty<=doc.actual_qty) ? 'green' : 'orange';
+			}
+		});
+
 		frm.set_query('work_order', function() {
 			return {
 				filters: [
@@ -774,15 +782,6 @@ erpnext.stock.StockEntry = erpnext.stock.StockController.extend({
 				}
 			}
 		}
-
-		this.frm.set_indicator_formatter('item_code',
-			function(doc) {
-				if (!doc.s_warehouse) {
-					return 'blue';
-				} else {
-					return (doc.qty<=doc.actual_qty) ? "green" : "orange"
-				}
-			})
 
 		this.frm.add_fetch("purchase_order", "supplier", "supplier");
 
