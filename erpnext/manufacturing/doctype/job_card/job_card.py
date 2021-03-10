@@ -40,6 +40,7 @@ class JobCard(Document):
 				self.append("sub_operations", row)
 
 	def validate_time_logs(self):
+		self.total_completed_qty = 0.0
 		self.total_time_in_mins = 0.0
 		self.total_completed_qty = 0.0
 
@@ -59,8 +60,6 @@ class JobCard(Document):
 
 				if d.completed_qty and not self.sub_operations:
 					self.total_completed_qty += d.completed_qty
-		else:
-			self.total_completed_qty = 0.0
 
 			self.total_completed_qty = flt(self.total_completed_qty, self.precision("total_completed_qty"))
 
