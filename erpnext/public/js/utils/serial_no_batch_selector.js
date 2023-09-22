@@ -340,11 +340,19 @@ erpnext.SerialBatchPackageSelector = class SerialNoBatchBundleUpdate {
 		const { scan_serial_no, scan_batch_no } = this.dialog.get_values();
 
 		if (scan_serial_no) {
-			this.dialog.fields_dict.entries.df.data.push({
-				serial_no: scan_serial_no
-			});
-
-			this.dialog.fields_dict.scan_serial_no.set_value('');
+			frappe.db.get_value(
+				"Serial No",
+				{"serial_no": scan_serial_no, "item_code": this.item.item_code},
+				"name",
+				(res) => {
+					if (res.name) {
+						this.dialog.fields_dict.entries.df.data.push({
+							serial_no: res.name
+						});
+					}
+					this.dialog.fields_dict.scan_serial_no.set_value('');
+				}
+			);
 		} else if (scan_batch_no) {
 			this.dialog.fields_dict.entries.df.data.push({
 				batch_no: scan_batch_no

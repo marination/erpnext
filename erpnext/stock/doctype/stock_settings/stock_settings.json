@@ -44,6 +44,7 @@
   "auto_reserve_serial_and_batch",
   "serial_and_batch_item_settings_tab",
   "section_break_7",
+  "allow_duplicate_serial_nos",
   "auto_create_serial_and_batch_bundle_for_outward",
   "pick_serial_and_batch_based_on",
   "column_break_mhzc",
@@ -65,8 +66,7 @@
   "stock_frozen_upto_days",
   "column_break_26",
   "role_allowed_to_create_edit_back_dated_transactions",
-  "stock_auth_role",
-  "section_break_plhx"
+  "stock_auth_role"
  ],
  "fields": [
   {
@@ -421,6 +421,13 @@
    "fieldname": "allow_to_edit_stock_uom_qty_for_purchase",
    "fieldtype": "Check",
    "label": "Allow to Edit Stock UOM Qty for Purchase Documents"
+  },
+  {
+   "default": "0",
+   "description": "Allows duplicacy across separate items. Maintains uniqeness within an item.",
+   "fieldname": "allow_duplicate_serial_nos",
+   "fieldtype": "Check",
+   "label": "Allow Duplicate Serial Nos Between Items"
   }
  ],
  "icon": "icon-cog",
