@@ -354,12 +354,20 @@ erpnext.SerialBatchPackageSelector = class SerialNoBatchBundleUpdate {
 				{"serial_no": scan_serial_no, "item_code": this.item.item_code},
 				"name",
 				(res) => {
+					this.dialog.fields_dict.scan_serial_no.set_value('');
+
 					if (res.name) {
 						this.dialog.fields_dict.entries.df.data.push({
 							serial_no: res.name
 						});
+					} else {
+						frappe.throw(
+							__(
+								"Serial No {0} does not belong to Item {1}",
+								[scan_serial_no.bold(), this.item.item_code.bold()]
+							)
+						);
 					}
-					this.dialog.fields_dict.scan_serial_no.set_value('');
 				}
 			);
 		} else if (scan_batch_no) {
